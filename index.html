@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>MLBB Weekly Online Tournament</title>
+    <title>Tournament Embed</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
@@ -56,7 +56,7 @@
 <body class="bg-body-bg font-sans min-h-screen flex flex-col items-center justify-center p-4 sm:p-8">
     
     <div class="w-full max-w-5xl text-text-dark mb-6 flex justify-between items-center px-0 md:px-2">
-        <h1 class="text-2xl md:text-3xl font-extrabold text-accent">Tournament Central <span class="text-text-dark">2025</span></h1>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-accent">Tournament Central <span class="text-text-dark">2024</span></h1>
         <div class="text-sm text-text-muted hidden sm:block">Real-time Data Feed</div>
     </div>
 
@@ -68,7 +68,7 @@
                     🥇
                 </div>
                 <div>
-                    <div class="text-xl font-bold leading-snug text-text-dark">Supreme Esports League Bracket</div>
+                    <div class="text-xl font-bold leading-snug text-text-dark">Current Championship Bracket</div>
                     <div class="text-sm text-muted">Last Updated: <span class="font-semibold" id="lastUpdated">Just now</span></div>
                 </div>
             </div>
@@ -95,7 +95,7 @@
             <iframe
                 id="bracketIframe"
                 class="responsive-iframe"
-                src="https://brackethq.com/b/ucexc/embed/"
+                src="https://brackethq.com/b/ucexc/embed/?name=1" 
                 title="Tournament bracket"
                 loading="lazy"
                 sandbox="allow-forms allow-scripts allow-same-origin allow-popups"
@@ -105,7 +105,7 @@
                 <p class="text-text-dark text-base mb-3 font-medium">
                     Critical Error: Failed to load the bracket content.
                 </p>
-                <a class="text-accent hover:text-sky-700 text-sm font-semibold transition-colors" href="https://brackethq.com/b/ucexc/" target="_blank" rel="noopener">
+                <a class="text-accent hover:text-sky-700 text-sm font-semibold transition-colors" href="https://brackethq.com/b/ucexc/embed/?name=1" target="_blank" rel="noopener">
                     View bracket directly on source website &rarr;
                 </a>
             </div>
@@ -149,7 +149,7 @@
                 spinner.style.display = 'flex';
                 fallback.style.display = 'none';
                 
-                iframe.src = iframe.src.split('#')[0] + '#reload=' + Date.now();
+                iframe.src = iframe.src.split('#')[0] + '&reload=' + Date.now();
                 
                 clearTimeout(loadTimeout);
                 loadTimeout = setTimeout(() => {
