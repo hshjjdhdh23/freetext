@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
+        /* CSS for the Glassmorphism Effect */
         .glass-card {
             background-color: rgba(255, 255, 255, 0.6); 
             backdrop-filter: blur(8px);
@@ -14,6 +15,7 @@
             border: 1px solid rgba(255, 255, 255, 0.4);
         }
         
+        /* Iframe baseline height */
         .responsive-iframe {
             width: 100%;
             height: 600px; 
@@ -21,6 +23,7 @@
             display: block;
         }
 
+        /* Loading Spinner Animation */
         .dot {
             animation: bounce 0.8s infinite ease-in-out;
         }
@@ -36,8 +39,8 @@
             theme: {
                 extend: {
                     colors: {
-                        'body-bg': '#e0f2f7', 
-                        'accent': '#0ea5e9', 
+                        'body-bg': '#e0f2f7', /* Light, airy background */
+                        'accent': '#0ea5e9', /* Vibrant Sky Blue */
                         'text-dark': '#1e293b', 
                         'text-muted': '#475569', 
                     },
@@ -149,7 +152,8 @@
                 spinner.style.display = 'flex';
                 fallback.style.display = 'none';
                 
-                iframe.src = iframe.src.split('#')[0] + '&reload=' + Date.now();
+                // Forces reload by adding a unique query parameter
+                iframe.src = iframe.src.split('#')[0].split('&reload=')[0] + '&reload=' + Date.now();
                 
                 clearTimeout(loadTimeout);
                 loadTimeout = setTimeout(() => {
