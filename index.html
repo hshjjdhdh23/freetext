@@ -1,601 +1,178 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaiden | Free SMS Sender</title>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <meta name="title" content="FSMS - Free SMS for the Philippines">
-    <meta name="description" content="Send free SMS messages to any Philippine number instantly with FSMS. No signup required, fast and reliable.">
-    <meta name="keywords" content="Free SMS, Philippines, FSMS, Text, Messaging, Kiff, Free text">
-    <meta name="author" content="Kaiden">
-        <meta property="og:title" content="FSMS - Free SMS for the Philippines">
-    <meta property="og:description" content="Send free SMS messages to any Philippine number instantly with FSMS.">
-    <meta property="og:image" content="https://freetext.echobykiff.site/favicon.png">
-    <meta property="og:url" content="https://freetext.echobykiff.site/">
-    <meta property="og:type" content="website">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>MLBB Weekly Online Tournament</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
-    :root {
-      --bg-color: #f0f2f5;
-      --container-bg: #ffffff;
-      --container-bg-alt: #f5f7fa;
-      --text-color: #2c3e50;
-      --secondary-text: #7f8c8d;
-      --primary-color: #3498db;
-      --primary-hover: #2980b9;
-      --highlight-color: #32c4b7;
-      --border-color: #e0e6ed;
-      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      --success-color: #2ecc71;
-      --error-color: #e74c3c;
-    }
-
-    body {
-      font-family: 'Roboto', sans-serif;
-      color: var(--text-color);
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      background-color: var(--bg-color);
-      overflow-x: hidden;
-    }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.6); 
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        .responsive-iframe {
             width: 100%;
-            height: 100%;
-            background-image:
-                linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
-            opacity: 0.15;
-        }
-
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: transparent;
-            z-index: 1000;
-            padding: 1rem;
-            text-align: center;
-            box-sizing: border-box;
-            animation: slideInDown 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-        }
-        
-        .header.scrolled {
-            background-color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            transition: background-color 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        .header h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin: 0;
-            color: var(--highlight-color);
-        }
-
-        .header p {
-            font-size: 0.9rem;
-            color: var(--secondary-text);
-            margin: 0.5rem 0 0;
-        }
-
-        .main-content {
-            width: 100%;
-            max-width: 650px;
-            margin-top: 10rem;
-            margin-bottom: 2rem;
-            padding: 0 1rem;
-            box-sizing: border-box;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .container {
-            background-color: var(--container-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            box-shadow: var(--card-shadow);
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-        }
-
-        .reminders {
-            background-color: var(--container-bg-alt);
-            border-radius: 12px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-            border-left: 5px solid var(--highlight-color);
-            box-shadow: none;
-        }
-
-        .container:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-        }
-
-        .reminders:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
-        }
-        
-        .reminders h3 {
-            font-family: 'Montserrat', sans-serif;
-            margin-top: 0;
-            font-size: 1.25rem;
-            color: var(--highlight-color);
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .reminders ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .reminders li {
-            font-size: 0.95rem;
-            color: var(--secondary-text);
-            margin-bottom: 0.75rem;
-            position: relative;
-            padding-left: 25px;
-            line-height: 1.5;
-        }
-        
-        .reminders li::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: var(--highlight-color);
-            font-weight: bold;
-            font-size: 1.2rem;
-            line-height: 1;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-            animation: slideInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-            opacity: 0;
-        }
-        
-        .form-group:nth-of-type(1) { animation-delay: 0.2s; }
-        .form-group:nth-of-type(2) { animation-delay: 0.4s; }
-        .form-group:nth-of-type(3) { animation-delay: 0.6s; }
-
-        label {
+            height: 600px; 
+            border: 0;
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--secondary-text);
         }
 
-        input, textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 1rem;
-            color: var(--text-color);
-            background-color: var(--container-bg-alt);
-            box-sizing: border-box;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        .dot {
+            animation: bounce 0.8s infinite ease-in-out;
         }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        .dot:nth-child(2){ animation-delay: 0.12s; }
+        .dot:nth-child(3){ animation-delay: 0.24s; }
+        @keyframes bounce {
+            0%,100% { transform: translateY(0); opacity: 0.5; }
+            50% { transform: translateY(-8px); opacity: 1; }
         }
-
-        textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        button {
-            width: 100%;
-            padding: 1rem;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        button:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-        }
-        
-        button:active {
-            transform: translateY(0);
-        }
-
-        .message-box {
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: 500;
-            margin-top: 1.5rem;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .success {
-            background-color: #d4efdf;
-            color: var(--success-color);
-            border: 1px solid #c8e6d1;
-        }
-
-        .error {
-            background-color: #fcebeb;
-            color: var(--error-color);
-            border: 1px solid #f9d8d8;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
-            font-size: 0.85rem;
-            color: var(--secondary-text);
-            animation: fadeIn 2s ease-out;
-        }
-
-        .footer a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .footer a:hover {
-            color: var(--primary-hover);
-            text-decoration: underline;
-        }
-
-        @keyframes slideInDown {
-            from { transform: translateY(-100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @media (max-width: 768px) {
-            body {
-                padding: 1rem;
-            }
-            .logo-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-}
-            
-            .header {
-                padding: 1rem;
-            }
-
-            .header h1 {
-                font-size: 1.8rem;
-            }
-
-            .main-content {
-                margin-top: 5rem;
-                padding: 0;
-            }
-            
-            .container, .reminders {
-                padding: 1.5rem;
-                margin-bottom: 1.5rem;
-            }
-            
-            .reminders h3 {
-                font-size: 1.1rem;
-            }
-
-            .footer {
-                padding-top: 1rem;
-            }
-        }
-        
-    .donate-fab-container {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      z-index: 1500;
-    }
-
-    .donate-fab {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: none;
-      background: var(--highlight-color);
-      color: #fff;
-      font-size: 1.5rem;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      transition: transform 0.3s ease, background 0.3s ease;
-    }
-
-    .donate-fab:hover {
-      background: #27ae90;
-      transform: scale(1.1) rotate(10deg);
-    }
-
-    .donate-tooltip {
-      visibility: hidden;
-      opacity: 0;
-      background: #333;
-      color: #fff;
-      padding: 6px 10px;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      position: absolute;
-      bottom: 70px;
-      right: 10px;
-      transition: opacity 0.3s ease;
-    }
-    .donate-fab-container:hover .donate-tooltip {
-      visibility: visible;
-      opacity: 1;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(4px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .modal-content {
-      background: #fff;
-      padding: 25px;
-      border-radius: 16px;
-      width: 90%;
-      max-width: 420px;
-      text-align: center;
-      box-shadow: var(--card-shadow);
-      transform: scale(0.7);
-      opacity: 0;
-      animation: popIn 0.4s forwards;
-    }
-
-    .modal-content h2 {
-      margin-top: 0;
-      color: var(--highlight-color);
-      font-family: 'Montserrat', sans-serif;
-    }
-
-    .modal-content img {
-      width: 200px;
-      margin: 15px 0;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    .modal-content .notes {
-      margin-top: 15px;
-      padding: 12px;
-      border-left: 4px solid var(--highlight-color);
-      background: #f8fdfa;
-      font-size: 0.95rem;
-      color: #555;
-      border-radius: 8px;
-      text-align: left;
-    }
-
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .close:hover { color: #000; }
-
-    @keyframes fadeIn {
-      from { background: rgba(0,0,0,0); }
-      to { background: rgba(0,0,0,0.6); }
-    }
-
-    @keyframes popIn {
-      from { transform: scale(0.7); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-    
-    .logo-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-}
-
-.logo {
-  height: 80px;
-  width: auto;
-}
-
-.site-title h1 {
-  margin: 0;
-}
-
-.site-title p {
-  margin: 0;
-}
-
     </style>
-</head>
-<body>
-<header class="header">
-  <div class="logo-container">
-    <img src="favicon.png" alt="FSMS Logo" class="logo">
-    <div class="site-title">
-      <h1>FSMS</h1>
-      <p>Send a free message to any Philippine number</p>
-    </div>
-  </div>
-</header>
-
-
-    <div class="main-content">
-        <div class="reminders-container">
-            <div class="reminders">
-                <h3>💡 Reminders</h3>
-                <ul>
-                    <li>𝗗𝗼 𝗻𝗼𝘁 𝗮𝗯𝘂𝘀𝗲 𝘁𝗵𝗶𝘀 𝘀𝗲𝗿𝘃𝗶𝗰𝗲. Excessive use may result in a temporary block.</li>
-                    <li>𝗧𝗵𝗶𝘀 𝘀𝗲𝗿𝘃𝗶𝗰𝗲 𝗶𝘀 𝗳𝗼𝗿 𝗽𝗲𝗿𝘀𝗼𝗻𝗮𝗹 𝘂𝘀𝗲 𝗼𝗻𝗹𝘆. Do not use it for spam or commercial purposes.</li>
-                    <li>𝗦𝘁𝗿𝗶𝗰𝘁𝗹𝘆 𝗻𝗼 𝘀𝗰𝗮𝗺𝘀 𝗼𝗿 𝗺𝗮𝗹𝗶𝗰𝗶𝗼𝘂𝘀 𝗮𝗰𝘁𝗶𝘃𝗶𝘁𝘆. Any misuse will be reported.</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="container">
-            <form id="smsForm">
-                <div class="form-group">
-                    <label for="number">Phone Number</label>
-                    <input type="text" id="number" name="number" placeholder="09xxxxxxxxx or +63xxxxxxxxxx" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Enter your message" required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <button type="submit">Send SMS</button>
-                </div>
-            </form>
-            
-            <div id="statusMessage" class="message-box" style="display: none;"></div>
-            
-            <footer class="footer">
-                <p>FSMS | Powered By : Kaiden</p>
-
-            </footer>
-        </div>
-    </div>
-    
-<div class="donate-fab-container">
-    <button class="donate-fab" id="openDonate">💳</button>
-    <span class="donate-tooltip">Donate via GCash</span>
-  </div>
-
-  <div id="donationModal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="closeDonate">&times;</span>
-      <h2>Support FSMS</h2>
-      <p>Scan this QR code to donate via GCash</p>
-      <img src="gcash-qr.png" alt="GCash QR Code">
-
-      <div class="notes">
-        💡 <strong>Note:</strong> Your support keeps FSMS free for everyone.  
-        Even a small donation helps us cover server costs.  
-        Thank you for supporting this project!
-      </div>
-    </div>
-  </div>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const header = document.querySelector('.header');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-            });
-        
-            document.getElementById('smsForm').addEventListener('submit', function(event) {
-                event.preventDefault();
-
-                const form = event.target;
-                const formData = new FormData(form);
-                const statusMessage = document.getElementById('statusMessage');
-                
-                statusMessage.style.display = 'block';
-                statusMessage.className = 'message-box';
-                statusMessage.textContent = 'Sending SMS... Please wait.';
-
-                fetch('send_sms.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(result => {
-                    if (result.success) {
-                        statusMessage.className = 'message-box success';
-                        statusMessage.innerHTML = `✅ 𝗦𝘂𝗰𝗰𝗲𝘀𝘀! Your message was sent. Please allow a moment for it to be delivered.
-                        <br>Response: ${result.message}`;
-                    } else {
-                        statusMessage.className = 'message-box error';
-                        statusMessage.innerHTML = `❌ 𝗠𝗲𝘀𝘀𝗮𝗴𝗲 𝗙𝗮𝗶𝗹𝗲𝗱. This may be due to an incorrect number or temporary server issue.
-                        <br>Please try again or check your number for typos.
-                        <br>Error: ${result.message}`;
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'body-bg': '#e0f2f7', 
+                        'accent': '#0ea5e9', 
+                        'text-dark': '#1e293b', 
+                        'text-muted': '#475569', 
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'glass': '0 4px 30px rgba(0, 0, 0, 0.1)',
                     }
-                })
-                .catch(error => {
-                    statusMessage.className = 'message-box error';
-                    statusMessage.innerHTML = `❌ An unexpected error occurred. Please try again in a few moments.
-                    <br>Error: ${error.message}`;
-                });
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-body-bg font-sans min-h-screen flex flex-col items-center justify-center p-4 sm:p-8">
+    
+    <div class="w-full max-w-5xl text-text-dark mb-6 flex justify-between items-center px-0 md:px-2">
+        <h1 class="text-2xl md:text-3xl font-extrabold text-accent">Tournament Central <span class="text-text-dark">2025</span></h1>
+        <div class="text-sm text-text-muted hidden sm:block">Real-time Data Feed</div>
+    </div>
+
+    <main class="w-full max-w-5xl rounded-2xl glass-card text-text-dark shadow-glass overflow-hidden transition-all duration-300" role="main" aria-label="Tournament bracket embed">
+        
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border-b border-white/50 bg-white/20">
+            <div class="flex items-center space-x-3 mb-2 sm:mb-0">
+                <div class="w-10 h-10 rounded-full bg-white/50 border border-white/80 flex items-center justify-center font-bold text-lg text-accent shadow-glass" aria-hidden="true">
+                    🥇
+                </div>
+                <div>
+                    <div class="text-xl font-bold leading-snug text-text-dark">Supreme Esports League Bracket</div>
+                    <div class="text-sm text-muted">Last Updated: <span class="font-semibold" id="lastUpdated">Just now</span></div>
+                </div>
+            </div>
+
+            <div class="flex space-x-3">
+                <button class="flex items-center space-x-1 bg-accent hover:bg-sky-600 text-white font-semibold py-2 px-5 rounded-xl text-base transition duration-150 shadow-md shadow-accent/40 focus:outline-none focus:ring-4 focus:ring-accent/50 active:scale-98" id="btnReload">
+                    <span>⚡</span>
+                    <span>Refresh Data</span>
+                </button>
+            </div>
+        </header>
+
+        <section class="relative w-full min-h-[400px] bg-white/80" id="embedWrap">
+            
+            <div class="absolute inset-0 flex items-center justify-center bg-white/80 backdrop-blur-sm z-10" id="spinner" aria-hidden="false" role="status" aria-live="polite">
+                <div class="flex space-x-2 items-center p-4 rounded-xl bg-white/90 border border-gray-200 shadow-glass">
+                    <div class="dot w-2 h-2 rounded-full bg-accent opacity-70"></div>
+                    <div class="dot w-2 h-2 rounded-full bg-accent opacity-70"></div>
+                    <div class="dot w-2 h-2 rounded-full bg-accent opacity-70"></div>
+                    <span class="ml-3 text-sm font-medium text-text-muted">Loading bracket data...</span>
+                </div>
+            </div>
+
+            <iframe
+                id="bracketIframe"
+                class="responsive-iframe"
+                src="https://brackethq.com/b/ucexc/embed/"
+                title="Tournament bracket"
+                loading="lazy"
+                sandbox="allow-forms allow-scripts allow-same-origin allow-popups"
+                ></iframe>
+
+            <div class="absolute inset-0 flex items-center justify-center flex-col text-center p-8 bg-gray-50/90" id="fallback" style="display:none">
+                <p class="text-text-dark text-base mb-3 font-medium">
+                    Critical Error: Failed to load the bracket content.
+                </p>
+                <a class="text-accent hover:text-sky-700 text-sm font-semibold transition-colors" href="https://brackethq.com/b/ucexc/" target="_blank" rel="noopener">
+                    View bracket directly on source website &rarr;
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        (function () {
+            const iframe = document.getElementById('bracketIframe');
+            const spinner = document.getElementById('spinner');
+            const fallback = document.getElementById('fallback');
+            const btnReload = document.getElementById('btnReload');
+            const lastUpdated = document.getElementById('lastUpdated');
+
+            const formatTime = () => {
+                const now = new Date();
+                const hours = now.getHours() % 12 || 12; 
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+                return `${hours}:${minutes} ${ampm}`;
+            };
+            
+            const handleLoad = () => {
+                spinner.style.display = 'none';
+                fallback.style.display = 'none';
+                clearTimeout(loadTimeout);
+                lastUpdated.textContent = formatTime();
+            };
+
+            lastUpdated.textContent = formatTime();
+            iframe.addEventListener('load', handleLoad);
+
+            let loadTimeout = setTimeout(() => {
+                if (spinner.style.display !== 'none') {
+                    spinner.style.display = 'none';
+                    fallback.style.display = 'flex'; 
+                }
+            }, 8000);
+
+            btnReload.addEventListener('click', () => {
+                spinner.style.display = 'flex';
+                fallback.style.display = 'none';
+                
+                iframe.src = iframe.src.split('#')[0] + '#reload=' + Date.now();
+                
+                clearTimeout(loadTimeout);
+                loadTimeout = setTimeout(() => {
+                    if (spinner.style.display !== 'none') {
+                        spinner.style.display = 'none';
+                        fallback.style.display = 'flex'; 
+                    }
+                }, 8000);
             });
-        });
-        document.addEventListener('DOMContentLoaded', () => {
-      const modal = document.getElementById('donationModal');
-      const openBtn = document.getElementById('openDonate');
-      const closeBtn = document.getElementById('closeDonate');
 
-      openBtn.onclick = () => { modal.style.display = 'block'; }
-      closeBtn.onclick = () => { modal.style.display = 'none'; }
-      window.onclick = (event) => { if (event.target === modal) modal.style.display = 'none'; }
-    });
-  </script>
+            function adjustHeight() {
+                const w = window.innerWidth;
+                if (w < 640) { 
+                    iframe.style.height = '680px'; 
+                } else if (w < 1024) { 
+                    iframe.style.height = '600px'; 
+                } else { 
+                    iframe.style.height = '580px';
+                }
+            }
+            window.addEventListener('resize', adjustHeight);
+            adjustHeight();
+        })();
+    </script>
 </body>
-
 </html>
